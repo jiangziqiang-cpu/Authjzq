@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "ManagementGoods";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+@model IEnumerable<DotNetStudy.Web.Models.GoodsImgae>
+<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+    <div>
+        <a asp-controller="Goods" asp-action="AddGoods">添加商品</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    商品编号
+                </th>
+                <th scope="col">
+                    商品名
+                </th>
+
+                <th scope="col">
+                    商品图片
+                </th>
+                <th scope="col">
+                    商品类型
+                </th>
+                <th scope="col">
+                    价格
+                </th>
+                <th scope="col">
+                    介绍
+                </th>
+                <th scope="col">
+                    库存
+                </th>
+                <th scope="col">
+                    操作
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td scope="col">
+                        @item.Goods.GoodsId
+                    </td>
+                    <td>
+                        @item.Goods.GoodsName
+                    </td>
+                    <td>
+                        <img src="../images/@item.GoodsImgaeName" width="50" height="50" />
+                        <a asp-controller="GoodsImgae" asp-action="AddGoodsImg" asp-route-id=@item.Goods.GoodsId>添加图片</a>
+                    </td>
+                    <td>
+                        @item.Goods.GoodsTypeId
+                    </td>
+                    <td>
+                        @item.Goods.Price
+                    </td>
+                    <td>
+                        @item.Goods.Desc
+                    </td>
+                    <td>
+                        @item.Goods.inventory
+                    </td>
+                    <td>
+                        <a asp-controller="Goods" asp-action="UpdateGoods" asp-route-id=@item.GoodsId>更新商品</a>
+                        <a asp-controller="Goods" asp-action="DeleteGoods" asp-route-id=@item.GoodsId>删除商品</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+

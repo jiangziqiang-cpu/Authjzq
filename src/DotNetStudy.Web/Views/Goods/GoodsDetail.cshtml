@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "GoodsDetail";
+}
+
+<h4>商品详情页面</h4>
+@model DotNetStudy.Web.ViewModels.GoodsViewModels.ShowGoodsModel
+<div id="wrap">
+    @{ 
+            <dl>
+                <dt>
+                    <label>图片：</label>  <img src="" />
+                </dt>
+                <dd>
+                    <label>
+                        商品编号：
+                    </label>
+                    @Model.GoodsId
+                </dd>
+                <dd>
+                    <label>
+                        商品名：
+                    </label>
+                    @Model.GoodsName
+                </dd>
+                <dd>
+                    <label>
+                        商品介绍：
+                    </label>
+                    @Model.Desc
+                </dd>
+                <dd>
+                    <label>
+                        商品类型：
+                    </label>
+                    @Model.GoodsTypeId
+                </dd>
+                <dd>
+                    <label>
+                        商品价格：
+                    </label>
+                    <span> @Model.Price&yen;</span>
+                </dd>
+                <dd>
+                    <label>
+                        商品库存：
+                    </label>
+                    @Model.inventory
+                </dd>
+                @Html.ActionLink("返回","ShowGoods", null)
+            </dl>
+        
+    }
+</div>
+

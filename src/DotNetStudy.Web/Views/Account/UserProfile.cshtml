@@ -1,0 +1,52 @@
+﻿@model DotNetStudy.Web.ViewModels.AccountViewModels.ProfileModel
+
+@{ ViewData["Title"] = "UserProfile"; }
+<h3>用户详情</h3>
+<a href="/Purse/Index" class="btn btn-primary">我的钱包</a>
+<a href="/MyAddress/Index" class="btn btn-primary">收货信息</a>
+<a href="/Account/UpdatePassword" class="btn btn-primary">修改密码</a>
+<a href="/MyOrder/ShowMyOrders" class="btn btn-primary">我的订单</a>
+<form asp-action="UserProfile" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">性别</div>
+        <div class="col-md-6">
+            @Html.RadioButtonFor(Model => Model.Sex, "男", new { @id = "man", @name = "Sex" })
+            <label for="man">
+                男
+            </label>
+            @Html.RadioButtonFor(Model => Model.Sex, "女", new { @id = "woman", @name = "Sex" })
+            <label for="woman">
+                女
+            </label>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">年龄</div>
+        <div class="col-md-6">
+            <input asp-for="Age" type="number" min="0" max="200" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">邮箱</div>
+        <div class="col-md-6">
+            <input asp-for="Email" type="email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">电话</div>
+        <div class="col-md-6">
+            <input asp-for="Phone" type="tel" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">头像</div>
+        <div class="col-md-6">
+            <img src="@Model.Avator" alt="用户头像" width="80" height="80" />
+            <a href="/Account/UploadAvator" class="btn btn-primary">上传</a>
+            <span asp-validation-for="Avator" class="text-danger"></span>
+        </div>
+    </div>
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-primary">修改</button>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

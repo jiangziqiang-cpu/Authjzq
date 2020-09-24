@@ -1,0 +1,20 @@
+﻿@model DotNetStudy.Web.ViewModels.PurseViewModels.PurseModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>我的钱包</h3>
+<a href="/Account/UserProfile" class="btn btn-primary">用户详情</a>
+<a href="/Pay/Index" class="btn btn-primary">用户支付</a>
+
+<div class="row">
+    <div class="col-md-6">余额</div>
+    <div class="col-md-6">@Model.Balance</div>
+    <div class="col-md-6">积分</div>
+    <div class="col-md-6">@Model.Integral</div>
+</div>
+<a href="/Purse/Recharge">充值</a>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

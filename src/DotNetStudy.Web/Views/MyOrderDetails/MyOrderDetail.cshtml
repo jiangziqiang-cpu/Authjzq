@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "ShowMyOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<DotNetStudy.Web.ViewModels.MyOrderDetailModel.MyViewOrderDetail>
+@using DotNetStudy.Web.ViewModels.MyOrdersModels
+
+<h3>我的订单详情</h3>
+<a href="/MyOrder/ShowMyOrders" class="btn btn-primary">我的订单</a>
+<table class="table table-striped">
+    <tr>
+        <td>订单Id</td>
+        <td>商品Id</td>
+        <td>商品名称</td>
+        <td>商品数量</td>
+        <td>商品价格:</td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.OrderId</td>
+            <td>@item.ProductId </td>
+            <td>@item.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@item.UnitPrice</td>          
+        </tr>
+    }
+</table>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+
+
+

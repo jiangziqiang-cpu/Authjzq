@@ -1,0 +1,43 @@
+﻿@model DotNetStudy.Web.ViewModels.PurseViewModels.RechargeModel
+
+@{
+    ViewData["Title"] = "Recharge";
+}
+
+<h3>用户充值</h3>
+<form action="/Purse/Recharge" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label">当前余额：</label>
+                <input asp-for="Balance" class="form-control" disabled="disabled" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentType" class="control-label">支付方式：</label>
+                @Html.RadioButtonFor(Model => Model.PaymentType, 0, new { @id = "Wechat", @name = "Payment" })
+                <label for="Wechat">
+                    微信
+                </label>
+                @Html.RadioButtonFor(Model => Model.PaymentType, 1, new { @id = "Alipay", @name = "Payment" })
+                <label for="Alipay">
+                    支付宝
+                </label>
+                <span asp-validation-for="PaymentType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label">充值金额：</label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">确认充值</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

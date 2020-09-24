@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "AddGoods";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+@model DotNetStudy.Web.ViewModels.GoodsViewModels.ShowGoodsModel
+
+
+@using (Html.BeginForm("",""))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>添加商品</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.GoodsId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GoodsId, new { htmlAttributes = new { @class = "form-control",name= "GoodsId" } })
+            @Html.ValidationMessageFor(model => model.GoodsId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GoodsName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GoodsName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GoodsName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GoodsTypeName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select name="GoodsTypeId">
+                @{
+                    //var list= ViewBag.GoodType;
+                    List<DotNetStudy.Web.Models.GoodsType> listtype = ViewBag.GoodType;
+                    var list = ViewBag.GoodType;
+                    for (int i = 0; i < listtype.Count; i++)
+                    {
+                        <option value="@listtype[i].GoodsTypeId">@listtype[i].GoodsTypeName</option>
+                    }
+                }
+            </select>
+            <a href="/Goods/AddGoodsType">添加商品分类</a>
+        </div>
+        
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+                   }
+

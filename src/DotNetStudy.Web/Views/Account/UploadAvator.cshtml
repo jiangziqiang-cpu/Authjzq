@@ -1,0 +1,34 @@
+﻿@model DotNetStudy.Web.ViewModels.AccountViewModels.UploadAvatorModel
+
+@{
+    ViewData["Title"] = "UploadAvator";
+}
+
+<h3>上传头像</h3>
+<form method="post" enctype="multipart/form-data" asp-action="UploadAvator">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">当前头像：</label>
+        <img src="@Model.Avator" width="80" height="80"/>
+        <input asp-for="Avator" type="hidden"/>
+        <span asp-validation-for="Avator" class="text-danger"></span>
+    </div>
+    <div>
+        <input type="file" name="files" id="ipt"/>
+        <img src="" alt="" id="img" width="80" height="80" />
+    </div>
+    <div>
+        <input type="submit" value="上传" />
+    </div>
+</form>
+
+
+@section Scripts {
+    <script>
+        ipt.onchange = function () {
+            img.src=URL.createObjectURL(this.files[0])
+            console.log(this.files)
+        }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
