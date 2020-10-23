@@ -1,0 +1,42 @@
+﻿@charset "utf-8";
+/* CSS Document */
+*{font-size:9pt;border:0;margin:0;padding:0;}
+body{font-family:'微软雅黑'; margin:0 auto;min-width:980px; }
+ul{display:block;margin:0;padding:0;list-style:none;}
+li{display:block;margin:0;padding:0;list-style: none;}
+img{border:0;}
+dl,dt,dd,span{margin:0;padding:0;display:block;}
+a,a:focus{text-decoration:none;color:#000;outline:none;blr:expression(this.onFocus=this.blur());}
+a:hover{color:#00a4ac;text-decoration:none;}
+table{border-collapse:collapse;border-spacing: 0;}
+cite{font-style:normal;}
+h2{font-weight:normal;}
+.indexBg{position:absolute;width:100%;height:100%;z-index:-1;background:url(../images/indexBg.png);}
+
+/*left.html*/
+.lefttop{background:url(../images/lefttop.gif) repeat-x;height:40px;color:#fff;font-size:14px;line-height:40px;}
+.lefttop span{margin-left:8px; margin-top:10px;margin-right:8px; background:url(../images/leftico.png) no-repeat; width:20px; height:21px;float:left;}
+.leftmenu dd span.icon02{ background-position:0px -32px;}
+.leftmenu dd span.icon03{ background-position:0px -64px;}
+.leftmenu dd span.icon04{ background-position:0px -90px;}
+.leftmenu dd span.icon05{ background-position:0px -120px;}
+.leftmenu dd span.icon06{ background-position:0px -154px;}
+.leftmenu dd span.icon07{ background-position:0px -184px;}
+.leftmenu dd span.icon08{ background-position:0px -210px;}
+.leftmenu dd span.icon09{ background-position:0px -240px;}
+.leftmenu{width:187px;padding-bottom: 9999px;margin-bottom: -9999px; overflow:hidden; background:url(../images/leftline.gif) repeat-y right;}
+.leftmenu dd{background:url(../images/menubg.png) repeat-x;line-height:42px;font-weight:bold;font-size:14px;border-right:solid 1px #b7d5df;}
+.leftmenu dd span{float:left;margin:10px 8px 0 12px; background:url(../images/icons.png) no-repeat; width:26px; height:26px;}
+.leftmenu dd .menuson{display:none;}
+.leftmenu dd:first-child .menuson{display:block;}
+.menuson {line-height:30px; font-weight:normal; }
+.menuson li{cursor:pointer;}
+.menuson li.active{position:relative; background:url(../images/libg.png) repeat-x; line-height:30px; color:#fff;}
+.menuson li cite{display:block; float:left; margin-left:32px; background:url(../images/list.gif) no-repeat; width:16px; height:16px; margin-top:7px;}
+.menuson li.active cite{background:url(../images/list1.gif) no-repeat;}
+.menuson li.active i{display:block; background:url(../images/sj.png) no-repeat; width:6px; height:11px; position:absolute; right:0;z-index:10000; top:9px; right:-1px;}
+.menuson li a{ display:block; *display:inline; *padding-top:5px;}
+.menuson li.active a{color:#fff;}
+.title{cursor:pointer; }
+
+

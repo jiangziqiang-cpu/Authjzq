@@ -1,4 +1,7 @@
-﻿namespace DotNetStudy.Web.Models
+﻿using AuthorityManagement.Web.Models;
+using System.Collections.Generic;
+
+namespace DotNetStudy.Web.Models
 {
     public class User
     {
@@ -10,5 +13,8 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Avator { get; set; }
+        public int EmailConfirmed { get; set; }
+        public int Active { get; set; }
+        public List<UserRole> UserRole { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DotNetStudy.Web.Migrations
+namespace AuthorityManagement.Web.Migrations
 {
     [DbContext(typeof(StudyDbContext))]
     partial class StudyDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,91 @@ namespace DotNetStudy.Web.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AuthorityManagement.Web.Models.RoleClaims", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaims");
+                });
+
+            modelBuilder.Entity("AuthorityManagement.Web.Models.RolePermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsGrant")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MyProperty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermissionName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RolePermissionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RolePermissionId");
+
+                    b.ToTable("RolePermission");
+                });
+
+            modelBuilder.Entity("AuthorityManagement.Web.Models.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRole");
+                });
 
             modelBuilder.Entity("DotNetStudy.Web.Models.Address", b =>
                 {
@@ -37,10 +122,13 @@ namespace DotNetStudy.Web.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -103,6 +191,8 @@ namespace DotNetStudy.Web.Migrations
 
                     b.HasKey("GoodsId");
 
+                    b.HasIndex("GoodsTypeId");
+
                     b.ToTable("Goods");
                 });
 
@@ -147,6 +237,8 @@ namespace DotNetStudy.Web.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GoodsId");
 
                     b.ToTable("GoodsImgae");
                 });
@@ -252,6 +344,8 @@ namespace DotNetStudy.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.ToTable("OrderDetails");
                 });
 
@@ -293,8 +387,8 @@ namespace DotNetStudy.Web.Migrations
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
 
-                    b.Property<Guid>("RelationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RelationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
@@ -320,6 +414,9 @@ namespace DotNetStudy.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Active")
+                        .HasColumnType("int");
+
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
@@ -328,6 +425,9 @@ namespace DotNetStudy.Web.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmailConfirmed")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -346,6 +446,92 @@ namespace DotNetStudy.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DotNetStudy.Web.ViewModels.MyOrdersModels.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Active")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisPlayName")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("AuthorityManagement.Web.Models.RoleClaims", b =>
+                {
+                    b.HasOne("DotNetStudy.Web.ViewModels.MyOrdersModels.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AuthorityManagement.Web.Models.RolePermission", b =>
+                {
+                    b.HasOne("AuthorityManagement.Web.Models.RolePermission", null)
+                        .WithMany("Children")
+                        .HasForeignKey("RolePermissionId");
+                });
+
+            modelBuilder.Entity("AuthorityManagement.Web.Models.UserRole", b =>
+                {
+                    b.HasOne("DotNetStudy.Web.Models.User", "User")
+                        .WithMany("UserRole")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DotNetStudy.Web.Models.Address", b =>
+                {
+                    b.HasOne("DotNetStudy.Web.Models.Order", "Order")
+                        .WithOne("Address")
+                        .HasForeignKey("DotNetStudy.Web.Models.Address", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DotNetStudy.Web.Models.Goods", b =>
+                {
+                    b.HasOne("DotNetStudy.Web.Models.GoodsType", "GoodsType")
+                        .WithMany("Goods")
+                        .HasForeignKey("GoodsTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DotNetStudy.Web.Models.GoodsImgae", b =>
+                {
+                    b.HasOne("DotNetStudy.Web.Models.Goods", "Goods")
+                        .WithMany("GoodsImgae")
+                        .HasForeignKey("GoodsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DotNetStudy.Web.Models.OrderDetail", b =>
+                {
+                    b.HasOne("DotNetStudy.Web.Models.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

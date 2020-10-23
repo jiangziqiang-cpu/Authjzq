@@ -1,0 +1,103 @@
+﻿
+@model AuthorityManagement.Web.ViewModels.Role.AddAndEditRoleViewModels
+@{
+    ViewData["Title"] = "EditRole";
+}
+<div class="card">
+
+    <h5 class="card-title">修改角色</h5>
+
+    <form role="form" asp-action="UpdateRole" method="post">
+        <div class="card-body">
+            <div class="list-group list-group-horizontal-sm" id="list-tab" role="tablist">
+                <a class="list-group-item active" id="list-home-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="home">角色</a>
+                <a class="list-group-item " id="list-profile-list" data-toggle="list" href="#list-permissions" role="tab" aria-controls="profile">权限</a>
+            </div>
+            <div class="tab-content mt-2" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-home-list">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <input type="hidden" name="Id" value="@Model.Id" />
+                            <label asp-for="Name" class="control-label">权限名</label>
+                            <input asp-for="Name" class="form-control" type="text" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="DisPlayName" class="control-label">名称</label>
+                            <input asp-for="DisPlayName" class="form-control" type="text" />
+                            <span asp-validation-for="DisPlayName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="Description" class="control-label">详细说明</label>
+                            <input asp-for="Description" class="form-control" type="text" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="Active" class="control-label">是否启用</label>
+                            @Html.RadioButtonFor(Model => Model.Active, "禁用", new { @id = "Disable", @name = "Active" })
+                            <label for="man">
+                                禁用
+                            </label>
+                            @Html.RadioButtonFor(Model => Model.Active, "启用", new { @id = "Enable", @name = "Active" })
+                            <label for="woman">
+                                启用
+                            </label>
+                            <span asp-validation-for="Active" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="list-permissions" role="tabpanel" aria-labelledby="list-profile-list">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="treeview">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input id="selectAllPermission" class="form-check-input" type="checkbox" />
+                                                    <label for="selectAllPermission" class="form-check-label"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                描述
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @await Html.PartialAsync("_RecursivelyPermission", Model.RolePermissions)
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <a asp-action="List" class="btn btn-default">返回列表</a>
+        </div>
+    </form>
+</div>
+@section styles{
+    <link href="~/lib/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#selectAllPermission').click(function () {
+                $('.permission').prop('checked', $(this).is(':checked'));
+            });
+            $("input[type='checkbox'].permission").click(function () {
+                var name = $(this).attr("name");
+                var checked = $(this).is(":checked");
+                var children = $("input[name^='" + name + "'].permission");
+                $.each(children, (i, item) => {
+                    $(item).prop('checked', checked);
+                })
+
+            })
+        })
+    </script>
+}

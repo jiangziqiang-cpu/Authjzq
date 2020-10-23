@@ -1,0 +1,79 @@
+﻿@model DotNetStudy.Web.ViewModels.MyOrdersModels.ShowRole
+
+@using DotNetStudy.Web.ViewModels.MyOrdersModels
+@using Poseidon.Web.Areas.Admin
+
+@{
+    ViewData["Title"] = "ShowRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>角色管理</h3>
+@if (Tools.IsHasClaims(User, "Administration.Authorization.Role.Create"))
+{ 
+<button class="btn btn-primary " onclick="window.open('/RoleManageMent/AddRole/')">
+    添加角色
+</button>
+}
+    
+<table class="table table-striped">
+    <tr>
+        <td>Id</td>
+        <td>角色权限名称：</td>
+        <td>角色名称：</td>
+        <td>详细说明：</td>
+        <td>是否启用:</td>
+        <td colspan="2">操作 </td>
+    </tr>
+    @{
+        Pages pages = new Pages();
+    }
+    @foreach (var item in Model.ShowRoles)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name </td>
+            <td>@item.DisPlayName</td>
+            <td>@item.Description</td>
+            <td>@item.Active.GetDescription()</td>
+            <td>
+
+                <form action="/RoleManageMent/DisableOrEnable" method="post">
+                    <input type="hidden" name="Id" value="@item.Id" />
+                    <input type="hidden" name="Active" value="@item.Active" />
+                    @if ((Int32)item.Active == 0)
+                    {
+                        <button type="submit" style="float:left" class="btn  btn-success">启用</button>
+                    }
+                    @if ((Int32)item.Active == 1)
+                    {
+                        <button type="submit" style="float:left" class="btn btn-danger">禁用</button>
+                    }
+                </form>
+                @if (Tools.IsHasClaims(User, "Administration.Authorization.Role.Edit"))
+                {
+                    <button class="btn btn-primary" style="float:left" onclick="window.open('/RoleManageMent/EditRole/@item.Id')">
+                        编辑
+                    </button>
+                }
+
+                <form action="/RoleManageMent/RemoveRole" method="post">
+                    <input type="hidden" name="Id" value="@item.Id" />
+                    @if (Tools.IsHasClaims(User, "Administration.Authorization.Role.Delete"))
+                    {
+                        <button class="btn btn-danger" style="float:left" type="submit">
+                            移除
+                        </button>
+                    }
+                </form>
+
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- 模态框（Modal） -->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

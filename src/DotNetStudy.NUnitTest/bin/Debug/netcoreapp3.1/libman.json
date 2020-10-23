@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validate@1.19.2",
+      "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "admin-lte@3.0.5",
+      "destination": "wwwroot/lib/admin-lte/"
+    },
+    {
+      "library": "bootstrap-table@1.17.1",
+      "destination": "wwwroot/lib/bootstrap-table/"
+    },
+    {
+      "library": "bootstrap-daterangepicker@3.0.5",
+      "destination": "wwwroot/lib/bootstrap-daterangepicker/"
+    },
+    {
+      "library": "font-awesome@5.14.0",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "bootstrap-treeview@1.2.0",
+      "destination": "wwwroot/lib/bootstrap-treeview/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "knockout@3.5.1",
+      "destination": "wwwroot/lib/knockout/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.5.2",
+      "destination": "wwwroot/bootstrap/"
+    }
+  ]
+}

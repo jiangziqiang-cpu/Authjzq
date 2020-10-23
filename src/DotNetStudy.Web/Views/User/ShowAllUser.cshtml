@@ -1,0 +1,207 @@
+﻿@using DotNetStudy.Web.ViewModels.MyOrdersModels
+@model AuthorityManagement.Web.ViewModels.AccountViewModels.AccountViewModels
+@{
+    ViewData["Title"] = "ShowAllUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>用户</h3>
+@if (Tools.IsHasClaims(User, "Administration.Authorization.User.Create")) 
+{
+    <button class="btn btn-primary " data-toggle="modal" data-target="#myModal">
+        添加用户
+    </button>
+}
+<table class="table table-striped">
+    <tr>
+        <td>用户名</td>
+        <td>性别：</td>
+        <td>年龄：</td>
+        <td>邮箱：</td>
+        <td>电话:</td>
+        <td>头像:</td>
+
+        <td>是否启用</td>
+        <td colspan="2">操作</td>
+    </tr>
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>@item.UserName</td>
+            <td>@item.Sex</td>
+            <td>@item.Age</td>
+            <td>@item.Email</td>
+            <td>@item.Phone</td>
+            <td><img src="@item.Avator" id="img" style="width:50px;height:50px" /></td>
+
+            @*<td>@item.EmailConfirmed</td>*@
+            @if (item.Active == 0)
+            {
+                <td>禁用</td>
+            }
+            @if (item.Active == 1)
+            {
+                <td>启用</td>
+            }
+            <td>
+                <table>
+                    @*<button class="btn btn-primary " data-toggle="modal" style="float:left" data-target="#@item.UserName">
+                            编辑
+                        </button>*@
+                    @if (Tools.IsHasClaims(User, "Administration.Authorization.User.Edit"))
+                    {
+                        <button class="btn btn-primary " @*style="float:left"*@ onclick="window.open('/User/EditUser/@item.Id')">
+                            编辑
+                        </button>
+                    }
+                    <form action="/User/UserEnabledAndDisabled" method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        @if (item.Active == 0)
+                        {
+                            <button type="submit" @*style="float:left"*@ class="btn  btn-success">启用</button>
+                        }
+                        @if (item.Active == 1)
+                        {
+                            <button type="submit" @*style="float:left;"*@ class="btn  btn-danger ">禁用</button>
+                        }
+                    </form>
+                    <form action="/User/RomoveUser" method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        @if (Tools.IsHasClaims(User, "Administration.Authorization.User.Delete"))
+                        {
+                            <button class="btn btn-danger " @*style="float:left"*@ type="submit">
+                                移除
+                            </button>
+                        }
+
+                    </form>
+                </table>
+            </td>
+        </tr>
+    }
+</table>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加角色
+                </h4>
+            </div>
+            <form asp-action="AddUser" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group col-md-12">
+                        <img class="img-fluid  border profile-user-img" src="/lib/admin-lte/img/boxed-bg.jpg" width="128" />
+                        <div class="custom-file mt-2">
+                            <input type="file" class="custom-file-input" id="avatarFile" asp-for="Avator">
+                            <label class="custom-file-label">请选择你上传的图像文件</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label">用户名</label>
+                        <input asp-for="UserName" class="form-control" type="text" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">密码：</label>
+                        <input asp-for="Password" class="form-control" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label asp-for="Sex" class="control-label">性别</label>
+                            @Html.RadioButtonFor(item => item.Sex, "男", new { @id = "man", @name = "Sex" })
+                            <label for="Enable">
+                                男
+                            </label>
+                            @Html.RadioButtonFor(item => item.Sex, "女", new { @id = "woman", @name = "Sex" })
+                            <label for="Disable">
+                                女
+                            </label>
+                            <span asp-validation-for="Sex" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Age" class="control-label">年龄：</label>
+                        <input asp-for="Age" class="form-control" />
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">邮箱：</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label">电话：</label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Active" class="control-label">是否启用</label>
+                        @Html.RadioButtonFor(Model => Model.Active, "禁用", new { @id = "Disable", @name = "Active" })
+                        <label for="man">
+                            禁用
+                        </label>
+                        @Html.RadioButtonFor(Model => Model.Active, "启用", new { @id = "Enable", @name = "Active" })
+                        <label for="woman">
+                            启用
+                        </label>
+                        <span asp-validation-for="Active" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>角色</label>
+                        @if (Model.Roles != null)
+                        {
+                            foreach (var item in Model.Roles)
+                            {
+                                <div class="form-check">
+                                    <input id="role#@item" name="Role.@item" class="form-check-input" type="checkbox" />
+                                    <label for="role#@item" class="form-check-label">@item</label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        添加
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(function () {
+
+            $("#avatarFile").change(function () {
+                var url = null;
+                if (window.createObjectURL != undefined) {
+                    url = window.createObjectURL(this.files[0]);
+                } else if (window.URL != undefined) {
+                    url = window.URL.createObjectURL(this.files[0]);
+                } else if (window.webkitURL != undefined) {
+                    url = window.webkitURL.createObjectURL(this.files[0]);
+                }
+                console.log(this.files[0]);
+                $(".profile-user-img").attr("src", url);
+            })
+
+        })
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
